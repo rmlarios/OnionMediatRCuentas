@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:WebApi.Controllers.ClientesController.GetAll(ApplicationC.Features.ClienteFeatures.Queries.GetAllClients.GetAllClientesSpecification)">
+            <summary>
+            Obtener todos los registros de Cuentas paginados
+            </summary>
+            <param name="specification">Criterios de paginación</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.ClientesController.Post(ApplicationC.Features.ClienteFeatures.Commands.CreateCliente.CreateClienteCommand)">
+            <summary>
+            Crear un registro de cliente
+            </summary>
+            <param name="command">Propiedades del registro a crear</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.ClientesController.Put(System.Int32,ApplicationC.Features.ClienteFeatures.Commands.UpdateCliente.UpdateClienteCommand)">
+            <summary>
+            Actualizar un registro de Cliente
+            </summary>
+            <param name="id">Id del Registro a Editar</param>
+            <param name="command">Propiedades a actualizar</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.ClientesController.Delete(System.Int32)">
+            <summary>
+            Eliminar un registro de Cliente
+            </summary>
+            <param name="id">Id del Registro a Eliminar</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CuentasController.GetAll(ApplicationC.Features.CuentaFeatures.Queries.GetAllCuentas.GetAllCuentasSpecification)">
+            <summary>
+            Obtener todos los registros de Cuentas paginados según criterios de búsqueda
+            </summary>
+            <param name="specification">Criterios de búsqueda</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CuentasController.Post(ApplicationC.Features.CuentaFeatures.Commands.CreateCuenta.CreateCuentaCommand)">
+            <summary>
+            Crear un registro de cliente
+            </summary>
+            <param name="command">Propiedades del registro a crear</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CuentasController.Put(System.Int32,ApplicationC.Features.CuentaFeatures.Commands.UpdateCuenta.UpdateCuentaCommand)">
+            <summary>
+            Actualizar un registro de Cuenta
+            </summary>
+            <param name="id">Id del Registro a Editar</param>
+            <param name="command">Propiedades a actualizar</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CuentasController.Delete(System.Int32)">
+            <summary>
+            Eliminar un registro de Cuenta
+            </summary>
+            <param name="id">Id del Registro a Eliminar</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.MovimientosController.GetAll(ApplicationC.Features.MovimientoFeatures.Queries.GetAllMovimientos.GetAllMovimientosSpecification)">
+            <summary>
+            Obtener todos los registros de Cuentas paginados según criterios de búsqueda
+            </summary>
+            <param name="specification">Criterios de búsqueda</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.MovimientosController.Post(ApplicationC.Features.MovimientoFeatures.Commands.CreateMovimiento.CreateMovimientoCommand)">
+            <summary>
+            Crear un registro de cliente
+            </summary>
+            <param name="command">Propiedades del registro a crear</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.MovimientosController.Put(System.Int32,ApplicationC.Features.MovimientoFeatures.Commands.UpdateMovimiento.UpdateMovimientoCommand)">
+            <summary>
+            Actualizar un registro de Cuenta
+            </summary>
+            <param name="id">Id del Registro a Editar</param>
+            <param name="command">Propiedades a actualizar</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.MovimientosController.Delete(System.Int32)">
+            <summary>
+            Eliminar un registro de Movimiento
+            </summary>
+            <param name="id">Id del Registro a Eliminar</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
