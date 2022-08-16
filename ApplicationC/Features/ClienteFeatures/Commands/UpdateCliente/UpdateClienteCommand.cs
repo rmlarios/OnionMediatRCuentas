@@ -13,6 +13,7 @@ namespace ApplicationC.Features.ClienteFeatures.Commands.UpdateCliente
 {
     public class UpdateClienteCommand : IRequest<Response<int>>
     {
+        [Required]
         public int Id { get; set; }
         public string Nombre { get; set; }
         [Required]

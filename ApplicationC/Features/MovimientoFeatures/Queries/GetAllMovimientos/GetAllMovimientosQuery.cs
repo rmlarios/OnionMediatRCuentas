@@ -31,28 +31,11 @@ namespace ApplicationC.Features.MovimientoFeatures.Queries.GetAllMovimientos
             public async Task<PagedResponse<IEnumerable<MovimientoDto>>> Handle(GetAllMovimientosQuery request, CancellationToken cancellationToken)
             {
                 var spec = _mapper.Map<GetAllMovimientosSpecification>(request);
-                var movimientos = GetQuery(await _movimientoRepository.GetPagedReponseAsync(spec.PageNumber, spec.PageSize, "Cuenta"), request);
+                var movimientos = await _movimientoRepository.GetPagedReponseAsync(spec.PageNumber, spec.PageSize, "Cuenta");
                 var movimientosDto = _mapper.Map<IEnumerable<MovimientoDto>>(movimientos);
                 return new PagedResponse<IEnumerable<MovimientoDto>>(movimientosDto, spec.PageNumber, spec.PageSize);
             }
 
-            protected internal virtual List<Movimiento> GetQuery(List<Movimiento> query, GetAllMovimientosQuery request)
-            {
-                if (!string.IsNullOrEmpty(request.FechaInicio) && !string.IsNullOrEmpty(request.FechaFin))
-                {
-                    DateTime fInicio;
-                    DateTime fFin;
-                    if (DateTime.TryParse(request.FechaInicio, out fInicio) && DateTime.TryParse(request.FechaFin, out fFin))
-                    {
-                        query = query.Where(c => c.Fecha.Date >= fInicio.Date && c.Fecha.Date <= fFin).ToList();
-                    }
-                    else
-                    {
-                        throw new ApiException("Parámetros de búsqueda no válidos");
-                    }
-                }
-                return query;
-            }
         }
     }
 }

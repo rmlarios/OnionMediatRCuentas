@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ApplicationC.Exceptions;
 using ApplicationC.Interfaces.Repositories;
 using ApplicationC.Wrappers;
+using Domain;
 using FluentValidation.Results;
 using MediatR;
 using ValidationException = ApplicationC.Exceptions.ValidationException;
@@ -40,14 +41,13 @@ namespace ApplicationC.Features.CuentaFeatures.Commands.UpdateCuenta
             {
                 var cuenta = await _cuentaRepository.GetByIdAsync(request.Id);
                 if (cuenta is null)
-                {
-                    throw new ApiException($"Cuenta no encontrada.");
-                }
+                    throw new KeyNotFoundException($"{nameof(Cuenta)} no encontrada.");
+                
 
                 var cliente = await _clienteRepository.GetByIdAsync(request.ClienteId);
                 if (cliente is null)
                 {
-                    throw new ApiException($"Cliente no encontrado.");
+                    throw new KeyNotFoundException($"{nameof(Cliente)} no encontrado.");
                 }
 
                 if (!await _cuentaRepository.EsNumeroCuentaUnicoAsync(request.NumeroCuenta, request.Id))

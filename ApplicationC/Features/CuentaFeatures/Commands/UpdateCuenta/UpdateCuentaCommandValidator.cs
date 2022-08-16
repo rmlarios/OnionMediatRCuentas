@@ -4,6 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using ApplicationC.Features.CuentaFeatures.Validators;
 using ApplicationC.Interfaces.Repositories;
+using ApplicationC.Parametrics;
+using ApplicationC.Validators;
 using FluentValidation;
 using FluentValidation.Internal;
 
@@ -15,8 +17,8 @@ namespace ApplicationC.Features.CuentaFeatures.Commands.UpdateCuenta
         public UpdateCuentaCommandValidator(ICuentaRepository cuentaRepository)
         {
             _cuentaRepository = cuentaRepository;
-            RuleFor(p => p.SaldoInicial).SaldoInicialValidator();
-            RuleFor(p => p.TipoCuenta).TipoCuentaValidator();
+            RuleFor(p => p.SaldoInicial).PermitirSoloPositivos();
+            RuleFor(p => p.TipoCuenta).PermitirSoloValoresEspecificos(TipoCuenta.TiposCuenta);
         }
 
         private async Task<bool> IsUniqueBarcode(UpdateCuentaCommand cuenta, string numeroCuenta, CancellationToken cancellationToken)

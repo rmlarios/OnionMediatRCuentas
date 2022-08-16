@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using DomainC.Globalization;
 using DomainC.Results;
+
 
 namespace Domain
 {
@@ -27,14 +29,37 @@ namespace Domain
         public bool EsCredito => TipoMovimiento == CREDITO;
         public bool EsDebito => TipoMovimiento == DEBITO;
 
-        public DomainValidation EsPermitidoDebito()
+        public virtual DomainValidation Validar(int idMovimientoEditar=0)
         {
             var result = new DomainValidation();
 
-            if(!Cuenta.TieneSaldoDisponible(Valor))
+            if (EsDebito && Valor >= 0)
+            {
+                result.Errors.Add(MovimientoStrings.ErrorValorDebitoPositivo);
+            }
+
+            if (EsCredito && Valor <= 0)
+            {
+                result.Errors.Add(MovimientoStrings.ErrorValorCreditoNegativo);
+            }
+
+            if (EsDebito)
+            {
+                var resultPermitidoDebito = EsPermitidoDebito(idMovimientoEditar);
+                result.Errors.AddRange(resultPermitidoDebito.Errors);
+            }
+
+
+            return result;
+        }
+        public virtual DomainValidation EsPermitidoDebito(int idMovimientoEditar=0)
+        {
+            var result = new DomainValidation();
+
+            if(!Cuenta.TieneSaldoDisponible(Valor,idMovimientoEditar))
                 result.Errors.Add("Saldo No disponible.");
 
-            if(Cuenta.LimiteDiarioSuperado(Fecha,Valor))
+            if(Cuenta.LimiteDiarioSuperado(Fecha,Valor,idMovimientoEditar))
                 result.Errors.Add("Cupo diario excedido.");
 
             return result;
@@ -42,7 +67,7 @@ namespace Domain
 
         public void CalcularSaldo()
         {
-            Saldo = Cuenta.SaldoActual() + Valor;
+            Saldo = Cuenta.SaldoActual(Id) + Valor;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using ApplicationC.Exceptions;
@@ -40,7 +41,7 @@ namespace ApplicationC.Features.CuentaFeatures.Commands.CreateCuenta
                 var cliente = await _clienteRepository.GetByIdAsync(request.ClienteId);
 
                 if (cliente == null)
-                    throw new ApiException($"Cliente No Econtrado.");
+                    throw new KeyNotFoundException($"{nameof(Cliente)} No Encontrado.");
 
                 var cuenta = _mapper.Map<Cuenta>(request);
                 cuenta.Cliente = cliente;

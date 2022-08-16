@@ -26,7 +26,7 @@ namespace Persistence
             #region Repositories
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddTransient<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddTransient<ICuentaRepository, CuentaRepository>();
             services.AddTransient<IMovimientoRepository, MovimientoRepository>();
             #endregion

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ApplicationC.Exceptions;
 using ApplicationC.Interfaces.Repositories;
 using ApplicationC.Wrappers;
+using Domain;
 using MediatR;
 
 namespace ApplicationC.Features.CuentaFeatures.Commands.DeleteCuenta
@@ -26,7 +27,7 @@ namespace ApplicationC.Features.CuentaFeatures.Commands.DeleteCuenta
                 var cuenta = await _cuentaRepository.GetByIdAsync(request.Id);
 
                 if (cuenta == null)
-                    throw new ApiException($"Product Not Found.");
+                    throw new KeyNotFoundException($"{nameof(Cuenta)} No Encontrado.");
 
                 await _cuentaRepository.DeleteAsync(cuenta);
                 return new Response<int>(cuenta.Id);

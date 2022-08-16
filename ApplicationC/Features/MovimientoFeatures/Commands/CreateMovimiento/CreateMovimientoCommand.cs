@@ -27,9 +27,6 @@ namespace ApplicationC.Features.MovimientoFeatures.Commands.CreateMovimiento
         [Required]
         public int CuentaId { get; set; }
 
-        public bool EsCredito => TipoMovimiento == Parametrics.TipoMovimiento.CREDITO;
-        public bool EsDebito => TipoMovimiento == Parametrics.TipoMovimiento.DEBITO;
-
         public class CreateMovimientoCommandHandler : IRequestHandler<CreateMovimientoCommand, Response<int>>
         {
             private readonly IMovimientoRepository _movimientoRepository;
@@ -43,18 +40,17 @@ namespace ApplicationC.Features.MovimientoFeatures.Commands.CreateMovimiento
             }
             public async Task<Response<int>> Handle(CreateMovimientoCommand request, CancellationToken cancellationToken)
             {
-                var cuenta = await _cuentaRepository.GetByIdAsync(request.CuentaId);
+                var cuenta = await _cuentaRepository.GetByIdAsync(request.CuentaId,new string[] {"Movimientos"});
                 if (cuenta == null)
-                    throw new KeyNotFoundException($"nameof(Cuenta) No Encontrado");
+                    throw new KeyNotFoundException($"{nameof(Cuenta)} No Encontrada.");
 
                 var movimiento = _mapper.Map<Movimiento>(request);
                 movimiento.Cuenta = cuenta;
-                if (movimiento.EsDebito)
-                {
-                    var result = movimiento.EsPermitidoDebito();
-                    if(result.HasErrors)
-                        throw new ValidationException(result.Errors);
-                }
+
+                var resultValidation = movimiento.Validar();
+                if (resultValidation.HasErrors)
+                    throw new ValidationException(resultValidation.Errors);
+               
                 movimiento.CalcularSaldo();
                 await _movimientoRepository.AddAsync(movimiento);
                 return new Response<int>(movimiento.Id);

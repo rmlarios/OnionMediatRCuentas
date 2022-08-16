@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -24,26 +25,26 @@ namespace Domain
         public bool Estado { get; set; }
         [Required(ErrorMessage = "El Cliente es Requerido")]
         public virtual Cliente Cliente { get; set; }
-        [Required]
-        public virtual ICollection<Movimiento> Movimientos { get;}
+        public virtual ICollection<Movimiento> Movimientos { get; set; }
 
-        public double SaldoActual()
+        public double SaldoActual(int idMovimientoEditar=0)
         {
-            var creditos = Movimientos.Where(m => m.EsCredito).Sum(m => m.Valor);
-            var debitos = Movimientos.Where(m => m.EsDebito).Sum(m => m.Valor);
+            var creditos = Movimientos.Where(m => m.EsCredito && m.Id!=idMovimientoEditar).Sum(m => m.Valor);
+            var debitos = Movimientos.Where(m => m.EsDebito && m.Id!= idMovimientoEditar).Sum(m => m.Valor);
             var saldoActual = SaldoInicial + creditos + debitos;
 
             return saldoActual;
         }
 
-        public bool TieneSaldoDisponible(double montoDebitar)
+        public bool TieneSaldoDisponible(double montoDebitar, int idMovimientoEditar=0)
         {
-            return SaldoActual() + montoDebitar > 0;
+            return SaldoActual(idMovimientoEditar) + montoDebitar > 0;
         }
 
-        public bool LimiteDiarioSuperado(DateTime date, double montoDebitar)
+        public bool LimiteDiarioSuperado(DateTime date, double montoDebitar, int idMovimientoEditar=0)
         {
-            return ((Movimientos.Where(m => m.EsDebito && m.Fecha.Date==date.Date).Sum(m => m.Valor)+montoDebitar)*-1) > 1000;
+            return ((Movimientos.Where(m => m.EsDebito && m.Fecha.Date == date.Date && m.Id != idMovimientoEditar)
+                .Sum(m => m.Valor) + montoDebitar) * -1) > 1000;
         }
     }
 }

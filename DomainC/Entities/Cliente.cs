@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Domain
 {
-    public class Cliente : Persona
+    public partial class Cliente : Persona
     {
         public Cliente()
         {
@@ -12,6 +13,6 @@ namespace Domain
         }
         public string Contraseña { get; set; }
         public bool Estado { get; set; }
-        public virtual ICollection<Cuenta> Cuentas { get; private set; }
+        public virtual ICollection<Cuenta> Cuentas { get; set; }
     }
 }

@@ -8,7 +8,7 @@ using Persistence.Context;
 
 namespace Persistence.Repositories
 {
-    public class MovimientoRepository: GenericRepository<Movimiento>, IMovimientoRepository
+    public abstract class MovimientoRepository: GenericRepository<Movimiento>, IMovimientoRepository
     {
         private readonly DbSet<Movimiento> _movimientos;
 

@@ -8,6 +8,7 @@ using ApplicationC.Features.CuentaFeatures.Commands.CreateCuenta;
 using ApplicationC.Features.CuentaFeatures.Queries.GetAllCuentas;
 using ApplicationC.Features.MovimientoFeatures.Commands.CreateMovimiento;
 using ApplicationC.Features.MovimientoFeatures.Queries.GetAllMovimientos;
+using ApplicationC.Features.MovimientoFeatures.Queries.GetMovimientosPorCLienteFecha;
 using AutoMapper;
 using Domain;
 
@@ -41,6 +42,10 @@ namespace ApplicationC.Mappings
             }));*/
             CreateMap<GetAllMovimientosQuery, GetAllMovimientosSpecification>();
             CreateMap<CreateMovimientoCommand, Movimiento>();
+
+            CreateMap<GetMovimientosPorClienteFechaQuery, GetMovimientosPorClienteFechaSpec>();
+
+
         }
     }
 }
